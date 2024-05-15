@@ -7,4 +7,4 @@ class FundConfig(AppConfig):
     verbose_name = "Групповые денежные сборы"
 
     def ready(self):
-        import fund.signals
+        import fund.signals  # noqa

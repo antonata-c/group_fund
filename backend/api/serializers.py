@@ -1,5 +1,4 @@
-from datetime import datetime
-
+from django.utils import timezone
 from rest_framework import serializers
 
 from fund.models import Collect, Payment
@@ -33,11 +32,12 @@ class CollectCreateSerializer(serializers.ModelSerializer):
         return value
 
     def validate_end_date(self, value):
-        if value is not None and value < datetime.now():
+        if value is not None and value < timezone.now():
             raise serializers.ValidationError(
                 'Дата окончания сбора не может быть раньше текущей даты.'
             )
         return value
+
 
 class CollectReadSerializer(serializers.ModelSerializer):
     """Сериализатор для чтения сбора."""
