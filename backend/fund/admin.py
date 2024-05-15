@@ -6,7 +6,7 @@ from .models import Collect, Payment
 
 class CollectAdmin(admin.ModelAdmin):
     list_display = (
-        'title', 'author', 'reason',
+        'title', 'user', 'reason',
         'planned_amount', 'current_amount', 'end_date'
     )
     list_filter = ('reason', 'end_date')

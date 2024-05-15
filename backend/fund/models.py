@@ -11,7 +11,7 @@ class Collect(models.Model):
         TREATMENT = 'TR', 'Лечение'
         OTHER = 'OT', 'Другое'
 
-    author = models.ForeignKey(
+    user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='collects'
     )
     title = models.CharField(max_length=255)

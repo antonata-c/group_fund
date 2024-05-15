@@ -42,7 +42,7 @@ class CollectCreateSerializer(serializers.ModelSerializer):
 class CollectReadSerializer(serializers.ModelSerializer):
     """Сериализатор для чтения сбора."""
 
-    author = serializers.SlugRelatedField(
+    user = serializers.SlugRelatedField(
         slug_field='username', read_only=True
     )
     number_of_donors = serializers.IntegerField()

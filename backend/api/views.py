@@ -21,7 +21,7 @@ class CollectViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         if self.action in ('list', 'retrieve'):
             return Collect.objects.select_related(
-                'author'
+                'user'
             ).prefetch_related(
                 'payments'
             ).annotate(
@@ -59,9 +59,9 @@ class PaymentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-    # Token a2586e7a43c2da38c0ed1a33b6bd456002a1f473
+
     # @method_decorator(cache_page(60 * 2))
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
-# TODO: вынести константы, расширить документацию, ридми, докер, отправка писем
-
+# TODO: вынести константы, расширить документацию, ридми, докер, наполнение базы
+# Token a2586e7a43c2da38c0ed1a33b6bd456002a1f473
