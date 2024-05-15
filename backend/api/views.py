@@ -64,5 +64,3 @@ class PaymentViewSet(BaseViewSet):
         if self.request.method == 'POST':
             return PaymentCreateSerializer
         return PaymentReadSerializer
-
-# TODO: расширить документацию, ридми, докер
