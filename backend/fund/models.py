@@ -1,8 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from .constants import (MAX_DECIMAL_DIGITS, MAX_DECIMAL_PLACES,
-                        MAX_STRING_LENGTH, SHORT_STRING_LENGTH)
+from .constants import (
+    MAX_DECIMAL_DIGITS, MAX_DECIMAL_PLACES,
+    MAX_STRING_LENGTH, SHORT_STRING_LENGTH,
+)
 
 User = get_user_model()
 
@@ -28,11 +30,6 @@ class Collect(models.Model):
     planned_amount = models.DecimalField(
         max_digits=MAX_DECIMAL_DIGITS, decimal_places=MAX_DECIMAL_PLACES,
         default=None, null=True, blank=True
-    )
-    current_amount = models.DecimalField(
-        max_digits=MAX_DECIMAL_DIGITS,
-        decimal_places=MAX_DECIMAL_PLACES,
-        default=0
     )
     image = models.ImageField(
         upload_to='collect_images/', blank=True
