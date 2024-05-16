@@ -49,7 +49,7 @@
    ```
    python manage.py createsuperuser
    
-   python manage.py fillbase
+   python manage.py fillbase --users 10 --collects 10 --payments 10
    ```
 #### Приложение будет доступно по адресу:
 
@@ -96,7 +96,7 @@
 6. При необходимости создайте суперпользователя и заполните базу данными:
    ```
    python manage.py createsuperuser
-   python manage.py fillbase
+   python manage.py fillbase --users 10 --collects 10 --payments 10
    ```
 #### Приложение будет доступно по адресу:
 

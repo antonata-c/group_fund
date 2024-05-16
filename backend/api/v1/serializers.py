@@ -46,6 +46,7 @@ class CollectReadSerializer(serializers.ModelSerializer):
         slug_field='username', read_only=True
     )
     number_of_donors = serializers.IntegerField()
+    current_amount = serializers.IntegerField()
     payments = PaymentShortSerializer(many=True, read_only=True)
 
     class Meta:
