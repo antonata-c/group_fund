@@ -7,13 +7,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fund', '0001_initial'),
+        ("fund", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='collect',
-            name='end_date',
+            model_name="collect",
+            name="end_date",
             field=models.DateTimeField(default=django.utils.timezone.now),
             preserve_default=False,
         ),

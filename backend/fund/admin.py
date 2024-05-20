@@ -5,17 +5,14 @@ from .models import Collect, Payment
 
 
 class CollectAdmin(admin.ModelAdmin):
-    list_display = (
-        'title', 'user', 'reason',
-        'planned_amount', 'end_date'
-    )
-    list_filter = ('reason', 'end_date')
-    search_fields = ('title', 'description')
+    list_display = ("title", "user", "reason", "planned_amount", "end_date")
+    list_filter = ("reason", "end_date")
+    search_fields = ("title", "description")
 
 
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ('user', 'collect', 'amount', 'created_at', 'hide_amount')
-    list_filter = ('created_at', 'hide_amount')
+    list_display = ("user", "collect", "amount", "created_at", "hide_amount")
+    list_filter = ("created_at", "hide_amount")
 
 
 admin.site.unregister(Group)

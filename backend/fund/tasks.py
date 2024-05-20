@@ -10,5 +10,5 @@ def send_email_task(subject, message, recipient_list, html_message=None):
         message,
         settings.DEFAULT_FROM_EMAIL,
         recipient_list,
-        html_message=html_message
+        html_message=html_message,
     )

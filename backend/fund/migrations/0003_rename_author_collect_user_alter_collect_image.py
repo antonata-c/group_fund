@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fund', '0002_alter_collect_end_date'),
+        ("fund", "0002_alter_collect_end_date"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='collect',
-            old_name='author',
-            new_name='user',
+            model_name="collect",
+            old_name="author",
+            new_name="user",
         ),
         migrations.AlterField(
-            model_name='collect',
-            name='image',
-            field=models.ImageField(blank=True, upload_to='collect_images/'),
+            model_name="collect",
+            name="image",
+            field=models.ImageField(blank=True, upload_to="collect_images/"),
         ),
     ]

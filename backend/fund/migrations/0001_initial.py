@@ -15,38 +15,96 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Collect',
+            name="Collect",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=255)),
-                ('reason', models.CharField(choices=[('BD', 'День рождения'), ('WD', 'Свадьба'), ('TR', 'Лечение'), ('OT', 'Другое')], default='OT', max_length=255)),
-                ('description', models.TextField()),
-                ('planned_amount', models.DecimalField(blank=True, decimal_places=2, default=None, max_digits=12, null=True)),
-                ('current_amount', models.DecimalField(decimal_places=2, default=0, max_digits=12)),
-                ('image', models.ImageField(blank=True, upload_to='collect_images')),
-                ('end_date', models.DateTimeField(blank=True, null=True)),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='collects', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=255)),
+                (
+                    "reason",
+                    models.CharField(
+                        choices=[
+                            ("BD", "День рождения"),
+                            ("WD", "Свадьба"),
+                            ("TR", "Лечение"),
+                            ("OT", "Другое"),
+                        ],
+                        default="OT",
+                        max_length=255,
+                    ),
+                ),
+                ("description", models.TextField()),
+                (
+                    "planned_amount",
+                    models.DecimalField(
+                        blank=True,
+                        decimal_places=2,
+                        default=None,
+                        max_digits=12,
+                        null=True,
+                    ),
+                ),
+                (
+                    "current_amount",
+                    models.DecimalField(decimal_places=2, default=0, max_digits=12),
+                ),
+                ("image", models.ImageField(blank=True, upload_to="collect_images")),
+                ("end_date", models.DateTimeField(blank=True, null=True)),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="collects",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Сбор',
-                'verbose_name_plural': 'Сборы',
+                "verbose_name": "Сбор",
+                "verbose_name_plural": "Сборы",
             },
         ),
         migrations.CreateModel(
-            name='Payment',
+            name="Payment",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('amount', models.DecimalField(decimal_places=2, max_digits=12)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('comment', models.TextField(blank=True)),
-                ('hide_amount', models.BooleanField(default=False)),
-                ('collect', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='fund.collect')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("amount", models.DecimalField(decimal_places=2, max_digits=12)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("comment", models.TextField(blank=True)),
+                ("hide_amount", models.BooleanField(default=False)),
+                (
+                    "collect",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="fund.collect"
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Платеж',
-                'verbose_name_plural': 'Платежи',
-                'default_related_name': 'payments',
+                "verbose_name": "Платеж",
+                "verbose_name_plural": "Платежи",
+                "default_related_name": "payments",
             },
         ),
     ]
