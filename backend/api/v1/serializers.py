@@ -1,6 +1,18 @@
 from django.utils import timezone
-from fund.models import Collect, Payment
 from rest_framework import serializers
+
+from fund.models import (
+    Collect,
+    EmailTemplate,
+    Payment
+)
+
+
+class BaseSerializer(serializers.ModelSerializer):
+    def validate_amount(self, value):
+        if value <= 0:
+            raise serializers.ValidationError("Сумма должна быть больше нуля.")
+        return value
 
 
 class PaymentShortSerializer(serializers.ModelSerializer):
@@ -13,7 +25,7 @@ class PaymentShortSerializer(serializers.ModelSerializer):
         fields = ("user", "amount", "comment", "hide_amount", "created_at")
 
 
-class CollectCreateSerializer(serializers.ModelSerializer):
+class CollectCreateSerializer(BaseSerializer):
     """Сериализатор для создания сбора."""
 
     class Meta:
@@ -22,15 +34,10 @@ class CollectCreateSerializer(serializers.ModelSerializer):
             "title",
             "reason",
             "description",
-            "planned_amount",
+            "amount",
             "image",
             "end_date",
         )
-
-    def validate_planned_amount(self, value):
-        if value <= 0:
-            raise serializers.ValidationError("Сумма сбора должна быть больше нуля.")
-        return value
 
     def validate_end_date(self, value):
         if value is not None and value < timezone.now():
@@ -53,17 +60,17 @@ class CollectReadSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class PaymentCreateSerializer(serializers.ModelSerializer):
+class PaymentCreateSerializer(BaseSerializer):
     """Сериализатор для создания платежа."""
 
     class Meta:
         model = Payment
-        fields = ("collect", "amount", "comment", "hide_amount")
-
-    def validate_amount(self, value):
-        if value <= 0:
-            raise serializers.ValidationError("Сумма платежа должна быть больше нуля.")
-        return value
+        fields = (
+            "collect",
+            "amount",
+            "comment",
+            "hide_amount",
+        )
 
 
 class PaymentReadSerializer(serializers.ModelSerializer):
@@ -74,4 +81,12 @@ class PaymentReadSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Payment
+        fields = "__all__"
+
+
+class EmailTemplateSerializer(serializers.ModelSerializer):
+    """Сериализатор для шаблонов писем."""
+
+    class Meta:
+        model = EmailTemplate
         fields = "__all__"

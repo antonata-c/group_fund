@@ -1,11 +1,25 @@
-from api.v1.views import CollectViewSet, PaymentViewSet
-from django.urls import include, path
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from django.urls import (
+    include,
+    path
+)
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularSwaggerView
+)
 from rest_framework.routers import DefaultRouter
+
+from api.v1.views import (
+    CollectViewSet,
+    EmailTemplateViewSet,
+    PaymentViewSet
+)
 
 router = DefaultRouter()
 router.register(r"collects", CollectViewSet, basename="collect")
 router.register(r"payments", PaymentViewSet, basename="payment")
+router.register(
+    r"email_templates", EmailTemplateViewSet, basename="email_template"
+)
 
 urlpatterns = [
     path("", include(router.urls)),

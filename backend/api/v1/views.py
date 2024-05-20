@@ -1,18 +1,28 @@
+from django.db.models import (
+    Count,
+    Sum
+)
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from rest_framework import (
+    permissions,
+    viewsets
+)
+
 from api.v1.permissions import StaffOrAuthorOrReadOnly
 from api.v1.serializers import (
     CollectCreateSerializer,
     CollectReadSerializer,
+    EmailTemplateSerializer,
     PaymentCreateSerializer,
-    PaymentReadSerializer,
+    PaymentReadSerializer
 )
-from django.db.models import Count, Sum
-from django.template.loader import render_to_string
-from django.utils.decorators import method_decorator
-from django.utils.html import strip_tags
-from django.views.decorators.cache import cache_page
-from fund.models import Collect, Payment
-from fund.tasks import send_email_task
-from rest_framework import permissions, viewsets
+from api.v1.utils import send_email
+from fund.models import (
+    Collect,
+    EmailTemplate,
+    Payment
+)
 
 
 class BaseViewSet(viewsets.ModelViewSet):
@@ -25,23 +35,12 @@ class BaseViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         user = self.request.user
         serializer.save(user=user)
-        if self.basename == "collect":
-            event = "сбор"
-            amount = serializer.instance.planned_amount
-        else:
-            event = "платеж"
-            amount = serializer.instance.amount
-        context = {
-            "event": event,
-            "amount": amount,
-            "user_name": user.first_name if user.first_name else user.username,
-        }
-        html_message = render_to_string("email-message.html", context=context)
-        send_email_task.delay(
-            subject="Новое письмо.",
-            message=strip_tags(html_message),
+        send_email(
             recipient_list=[user.email],
-            html_message=html_message,
+            context={
+                "event": "сбор" if self.basename == "collect" else "платеж",
+                "amount": serializer.validated_data.get("amount"),
+            },
         )
 
 
@@ -82,3 +81,15 @@ class PaymentViewSet(BaseViewSet):
         if self.request.method == "POST":
             return PaymentCreateSerializer
         return PaymentReadSerializer
+
+
+class EmailTemplateViewSet(viewsets.ModelViewSet):
+    """Представление для шаблонов писем."""
+
+    queryset = EmailTemplate.objects.all()
+    serializer_class = EmailTemplateSerializer
+    permission_classes = (permissions.IsAdminUser,)
+
+    @method_decorator(cache_page(60 * 2))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)

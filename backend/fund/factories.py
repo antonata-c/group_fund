@@ -1,7 +1,11 @@
 import factory
 from django.utils import timezone
 
-from .models import Collect, Payment, User
+from .models import (
+    Collect,
+    Payment,
+    User
+)
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -20,10 +24,11 @@ class CollectFactory(factory.django.DjangoModelFactory):
     user = factory.SubFactory(UserFactory)
     title = factory.Faker("sentence")
     reason = factory.Faker(
-        "random_element", elements=[choice[0] for choice in Collect.Reason.choices]
+        "random_element",
+        elements=[choice[0] for choice in Collect.Reason.choices],
     )
     description = factory.Faker("paragraph")
-    planned_amount = factory.Faker("random_number", digits=4)
+    amount = factory.Faker("random_number", digits=4)
     end_date = factory.Faker(
         "future_datetime", end_date="+30d", tzinfo=timezone.now().tzinfo
     )

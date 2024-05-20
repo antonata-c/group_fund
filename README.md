@@ -38,6 +38,8 @@
    ```
     sudo docker compose exec -it backend bash
    
+    poetry shell
+   
     python manage.py migrate --noinput
    
     python manage.py collectstatic --noinput
@@ -61,46 +63,50 @@
 **http://127.0.0.1/api/swagger/**
 
 <details>
-<summary>Данные по Coverage</summary>
+<summary><strong>Данные по Coverage</strong></summary>
 <pre>
-Name                                                                     Stmts   Miss  Cover   Missing
-------------------------------------------------------------------------------------------------------
+Name                                                                     Stmts   Miss  Cover
+--------------------------------------------------------------------------------------------
 api/__init__.py                                                              0      0   100%
 api/apps.py                                                                  4      0   100%
 api/urls.py                                                                  2      0   100%
 api/v1/__init__.py                                                           0      0   100%
-api/v1/permissions.py                                                        6      1    83%   11
-api/v1/serializers.py                                                       42      1    98%   32
+api/v1/permissions.py                                                        6      1    83%
+api/v1/serializers.py                                                       43      0   100%
 api/v1/tests/__init__.py                                                     0      0   100%
 api/v1/tests/test_serializers.py                                            28      0   100%
-api/v1/tests/test_views.py                                                  53      0   100%
-api/v1/urls.py                                                               8      0   100%
-api/v1/views.py                                                             45      1    98%   66
+api/v1/tests/test_views.py                                                  79      0   100%
+api/v1/urls.py                                                               9      0   100%
+api/v1/utils.py                                                             15      3    80%
+api/v1/views.py                                                             43      1    98%
 config/__init__.py                                                           2      0   100%
 config/celery.py                                                             6      0   100%
-config/settings.py                                                          44      1    98%   69
+config/settings.py                                                          44      1    98%
 config/urls.py                                                               5      0   100%
 fund/__init__.py                                                             0      0   100%
-fund/admin.py                                                               13      0   100%
-fund/apps.py                                                                 5      0   100%
-fund/constants.py                                                            4      0   100%
+fund/admin.py                                                               16      0   100%
+fund/apps.py                                                                 7      0   100%
+fund/constants.py                                                            5      0   100%
 fund/factories.py                                                           27      0   100%
 fund/management/__init__.py                                                  0      0   100%
 fund/management/commands/__init__.py                                         0      0   100%
-fund/management/commands/fillbase.py                                        20      0   100%
+fund/management/commands/fillbase.py                                        23      0   100%
 fund/migrations/0001_initial.py                                              7      0   100%
 fund/migrations/0002_alter_collect_end_date.py                               5      0   100%
 fund/migrations/0003_rename_author_collect_user_alter_collect_image.py       4      0   100%
 fund/migrations/0004_remove_collect_current_amount.py                        4      0   100%
+fund/migrations/0005_emailtemplate.py                                        4      0   100%
+fund/migrations/0006_rename_planned_amount_collect_amount.py                 4      0   100%
+fund/migrations/0007_emailtemplate_is_active.py                              4      0   100%
 fund/migrations/__init__.py                                                  0      0   100%
-fund/models.py                                                              33      1    97%   44
-fund/tasks.py                                                                6      1    83%   8
+fund/models.py                                                              45      2    96%
+fund/signals.py                                                              7      0   100%
 fund/tests/__init__.py                                                       0      0   100%
 fund/tests/test_commands.py                                                  9      0   100%
-fund/tests/test_models.py                                                   25      0   100%
-manage.py                                                                   12      2    83%   12-13
-------------------------------------------------------------------------------------------------------
-TOTAL                                                                      419      8    98%
+fund/tests/test_models.py                                                   37      0   100%
+manage.py                                                                   12      2    83%
+--------------------------------------------------------------------------------------------
+TOTAL                                                                      506     10    98%
 </pre>
 </details>
 

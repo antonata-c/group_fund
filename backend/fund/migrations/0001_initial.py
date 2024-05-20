@@ -2,7 +2,10 @@
 
 import django.db.models.deletion
 from django.conf import settings
-from django.db import migrations, models
+from django.db import (
+    migrations,
+    models
+)
 
 
 class Migration(migrations.Migration):
@@ -53,9 +56,14 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "current_amount",
-                    models.DecimalField(decimal_places=2, default=0, max_digits=12),
+                    models.DecimalField(
+                        decimal_places=2, default=0, max_digits=12
+                    ),
                 ),
-                ("image", models.ImageField(blank=True, upload_to="collect_images")),
+                (
+                    "image",
+                    models.ImageField(blank=True, upload_to="collect_images"),
+                ),
                 ("end_date", models.DateTimeField(blank=True, null=True)),
                 (
                     "author",
@@ -83,14 +91,18 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("amount", models.DecimalField(decimal_places=2, max_digits=12)),
+                (
+                    "amount",
+                    models.DecimalField(decimal_places=2, max_digits=12),
+                ),
                 ("created_at", models.DateTimeField(auto_now_add=True)),
                 ("comment", models.TextField(blank=True)),
                 ("hide_amount", models.BooleanField(default=False)),
                 (
                     "collect",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="fund.collect"
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="fund.collect",
                     ),
                 ),
                 (

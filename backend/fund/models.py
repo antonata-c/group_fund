@@ -2,10 +2,11 @@ from django.contrib.auth import get_user_model
 from django.db import models
 
 from .constants import (
+    DEFAULT_EMAIL_SUBJECT,
     MAX_DECIMAL_DIGITS,
     MAX_DECIMAL_PLACES,
     MAX_STRING_LENGTH,
-    SHORT_STRING_LENGTH,
+    SHORT_STRING_LENGTH
 )
 
 User = get_user_model()
@@ -20,13 +21,17 @@ class Collect(models.Model):
         TREATMENT = "TR", "Лечение"
         OTHER = "OT", "Другое"
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="collects")
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="collects"
+    )
     title = models.CharField(max_length=MAX_STRING_LENGTH)
     reason = models.CharField(
-        max_length=MAX_STRING_LENGTH, choices=Reason.choices, default=Reason.OTHER
+        max_length=MAX_STRING_LENGTH,
+        choices=Reason.choices,
+        default=Reason.OTHER,
     )
     description = models.TextField()
-    planned_amount = models.DecimalField(
+    amount = models.DecimalField(
         max_digits=MAX_DECIMAL_DIGITS,
         decimal_places=MAX_DECIMAL_PLACES,
         default=None,
@@ -60,3 +65,21 @@ class Payment(models.Model):
         verbose_name = "Платеж"
         verbose_name_plural = "Платежи"
         default_related_name = "payments"
+
+
+class EmailTemplate(models.Model):
+    """Модель для шаблонов писем."""
+
+    name = models.CharField(max_length=100, unique=True)
+    subject = models.CharField(max_length=255, default=DEFAULT_EMAIL_SUBJECT)
+    body = models.TextField()
+    is_html = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["-is_active", "name"]
+        verbose_name = "Шаблон письма"
+        verbose_name_plural = "Шаблоны писем"
+
+    def __str__(self):
+        return f"{'[x] ' if self.is_active else ''}{self.name}"
